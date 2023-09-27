@@ -16,6 +16,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
+import uz.raximov.maroqandtask.domain.template.AbstractLongEntity;
 import uz.raximov.maroqandtask.payload.NameItem;
 
 @Getter
@@ -32,11 +33,7 @@ import uz.raximov.maroqandtask.payload.NameItem;
                 })
         })
 })
-public class Place {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Place extends AbstractLongEntity {
 
     @Column
     private String name;
