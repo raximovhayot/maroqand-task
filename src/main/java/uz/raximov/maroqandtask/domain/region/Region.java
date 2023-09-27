@@ -1,4 +1,4 @@
-package uz.raximov.maroqandtask.domain;
+package uz.raximov.maroqandtask.domain.region;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,6 +17,6 @@ public class Region {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(unique = true)
     private String name;
 }
