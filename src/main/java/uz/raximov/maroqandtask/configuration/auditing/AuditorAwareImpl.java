@@ -5,7 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import uz.raximov.maroqandtask.domain.auth.User;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.util.Optional;
 
 public class AuditorAwareImpl implements AuditorAware<User> {

@@ -17,7 +17,7 @@ import uz.raximov.maroqandtask.repository.region.CarrierRepository;
 import uz.raximov.maroqandtask.repository.region.RegionRepository;
 import uz.raximov.maroqandtask.service.auth.UserService;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.Comparator;
 import java.util.List;
 

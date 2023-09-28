@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.validation.annotation.Validated;
 import uz.raximov.maroqandtask.domain.region.Place;
 import uz.raximov.maroqandtask.domain.region.Region;
 import uz.raximov.maroqandtask.exceptions.RestException;
@@ -13,12 +14,13 @@ import uz.raximov.maroqandtask.payload.region.CreateRegionDTO;
 import uz.raximov.maroqandtask.repository.region.PlaceRepository;
 import uz.raximov.maroqandtask.repository.region.RegionRepository;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Validated
 @RequiredArgsConstructor
 public class RegionService {
 

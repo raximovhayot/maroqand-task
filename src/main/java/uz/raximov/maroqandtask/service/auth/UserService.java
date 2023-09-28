@@ -9,7 +9,7 @@ import uz.raximov.maroqandtask.exceptions.RestException;
 import uz.raximov.maroqandtask.payload.auth.CreateUserDTO;
 import uz.raximov.maroqandtask.repository.auth.UsersRepository;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 @Service
 @RequiredArgsConstructor

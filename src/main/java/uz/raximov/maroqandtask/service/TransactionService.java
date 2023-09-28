@@ -24,7 +24,7 @@ import uz.raximov.maroqandtask.repository.transaction.RequestRepository;
 import uz.raximov.maroqandtask.repository.transaction.TransactionRepository;
 import uz.raximov.maroqandtask.service.region.CarrierService;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;

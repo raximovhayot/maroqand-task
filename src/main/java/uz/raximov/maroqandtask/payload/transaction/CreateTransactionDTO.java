@@ -1,23 +1,22 @@
 package uz.raximov.maroqandtask.payload.transaction;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateTransactionDTO {
-    @NotEmpty(message = "transactionId bo'sh bo'lmasligi kerak!")
+    @NotBlank(message = "transactionId bo'sh bo'lmasligi kerak!")
     private String transactionId;
-    @NotEmpty(message = "carrierName bo'sh bo'lmasligi kerak!")
+    @NotBlank(message = "carrierName bo'sh bo'lmasligi kerak!")
     private String carrierName;
-    @NotEmpty(message = "requestId bo'sh bo'lmasligi kerak!")
+    @NotBlank(message = "requestId bo'sh bo'lmasligi kerak!")
     private String requestId;
-    @NotEmpty(message = "offerId bo'sh bo'lmasligi kerak!")
+    @NotBlank(message = "offerId bo'sh bo'lmasligi kerak!")
     private String offerId;
 }

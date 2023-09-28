@@ -26,7 +26,6 @@ public class ExceptionsHandler {
         });
         return new ResponseEntity<>(new ApiResult<>(errors), HttpStatus.BAD_REQUEST);
     }
-
     @ExceptionHandler(value = {RestException.class})
     public ResponseEntity<ApiResult<List<ErrorData>>> handleException(RestException ex) {
         return new ResponseEntity<>(

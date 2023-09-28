@@ -11,7 +11,7 @@ import uz.raximov.maroqandtask.payload.auth.SignUpRequest;
 import uz.raximov.maroqandtask.payload.response.ApiResult;
 import uz.raximov.maroqandtask.service.auth.AuthenticationService;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/auth")
