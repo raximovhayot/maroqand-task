@@ -1,5 +1,6 @@
 package uz.raximov.maroqandtask.mapper;
 
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import uz.raximov.maroqandtask.domain.auth.User;

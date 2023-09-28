@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+import org.springframework.validation.annotation.Validated;
 import uz.raximov.maroqandtask.domain.auth.Role;
 import uz.raximov.maroqandtask.domain.auth.User;
 import uz.raximov.maroqandtask.domain.region.Carrier;
@@ -18,10 +20,13 @@ import uz.raximov.maroqandtask.repository.region.RegionRepository;
 import uz.raximov.maroqandtask.service.auth.UserService;
 
 import jakarta.validation.Valid;
+
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 @Service
+@Validated
 @RequiredArgsConstructor
 public class CarrierService {
     private final UserService userService;
@@ -42,8 +47,10 @@ public class CarrierService {
         carrier.setUser(user);
         carrier.setUserId(carrier.getUserId());
 
-        List<Region> regions = regionRepository.findAllByNameIn(dto.getRegionNames());
-        carrier.setRegions(regions);
+        if (!CollectionUtils.isEmpty(dto.getRegionNames())) {
+            List<Region> regions = regionRepository.findAllByNameIn(dto.getRegionNames());
+            carrier.setRegions(regions);
+        }
         carrierRepository.save(carrier);
         return regionMapper.toNameItemCollection(carrier.getRegions());
     }
