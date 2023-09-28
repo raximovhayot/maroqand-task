@@ -1,9 +1,13 @@
 package uz.raximov.maroqandtask.service;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import uz.raximov.maroqandtask.domain.DeliveryRegionsPerNTDataset;
 import uz.raximov.maroqandtask.domain.region.Carrier;
+import uz.raximov.maroqandtask.domain.region.Place;
 import uz.raximov.maroqandtask.domain.transaction.Offer;
 import uz.raximov.maroqandtask.domain.transaction.Request;
 import uz.raximov.maroqandtask.domain.transaction.Transaction;
@@ -13,6 +17,7 @@ import uz.raximov.maroqandtask.payload.transaction.CreateOfferDTO;
 import uz.raximov.maroqandtask.payload.transaction.CreateRequestDTO;
 import uz.raximov.maroqandtask.payload.transaction.CreateTransactionDTO;
 import uz.raximov.maroqandtask.payload.transaction.ValidatedData;
+import uz.raximov.maroqandtask.repository.DeliveryRegionsPerNTDatasetRepository;
 import uz.raximov.maroqandtask.repository.region.PlaceRepository;
 import uz.raximov.maroqandtask.repository.transaction.OfferRepository;
 import uz.raximov.maroqandtask.repository.transaction.RequestRepository;
@@ -23,6 +28,8 @@ import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -32,6 +39,7 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final PlaceRepository placeRepository;
     private final CarrierService carrierService;
+    private final DeliveryRegionsPerNTDatasetRepository deliveryRegionsPerNTDatasetRepository;
 
     public void addRequest(@Valid CreateRequestDTO dto) {
         if (requestRepository.existsByRequestId(dto.getRequestId())) {
@@ -63,6 +71,7 @@ public class TransactionService {
         offerRepository.save(offer);
     }
 
+    @Transactional
     public void addTransaction(@Valid CreateTransactionDTO dto) {
         ValidatedData data = validateTransactionDetails(dto);
         Transaction transaction = new Transaction();
@@ -72,6 +81,7 @@ public class TransactionService {
         transaction.setRequestId(data.getRequest().getId());
         transaction.setScore(0);
         transactionRepository.save(transaction);
+        incrementTransactionCount(data.getRegionIds());
     }
 
     private ValidatedData validateTransactionDetails(CreateTransactionDTO dto) {
@@ -94,11 +104,27 @@ public class TransactionService {
             throw RestException.restThrow("Kuryer etkazib berish, ham olib ketish joylariga (ya'ni, tegishli hududlarga) xizmat qilishi kerak!", HttpStatus.BAD_REQUEST);
         }
 
+        Long requestRegionId = Optional.ofNullable(request.getPlace()).map(Place::getRegionId)
+                .orElseGet(() -> placeRepository.findById(request.getPlaceId()).map(Place::getRegionId).orElse((long)-1));
+
+
+        Long offerRegionId = Optional.ofNullable(offer.getPlace()).map(Place::getRegionId)
+                .orElseGet(() -> placeRepository.findById(offer.getPlaceId()).map(Place::getRegionId).orElse((long) -1));
+
         return ValidatedData.builder()
                 .request(request)
                 .offer(offer)
                 .carrier(carrier)
+                .regionIds(Set.of(requestRegionId, offerRegionId))
                 .build();
+    }
+
+    private void incrementTransactionCount(@NonNull Set<Long> regionIds) {
+        for (Long regionId : regionIds) {
+            DeliveryRegionsPerNTDataset dataset = deliveryRegionsPerNTDatasetRepository.findByRegionId(regionId).orElse(new DeliveryRegionsPerNTDataset(regionId));
+            dataset.incrementTransactionCount();
+            deliveryRegionsPerNTDatasetRepository.save(dataset);
+        }
     }
 
     public boolean evaluateTransaction(int score, String transactionId) {

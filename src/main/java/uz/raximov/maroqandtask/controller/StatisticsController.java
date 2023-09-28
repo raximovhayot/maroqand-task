@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uz.raximov.maroqandtask.payload.response.ApiResult;
+import uz.raximov.maroqandtask.payload.statistics.DeliveryRegionsPerNT;
 import uz.raximov.maroqandtask.payload.statistics.NTPerProduct;
 import uz.raximov.maroqandtask.payload.statistics.ScorePerCarrier;
 import uz.raximov.maroqandtask.service.StatisticsService;
@@ -19,8 +20,8 @@ public class StatisticsController {
     private final StatisticsService statisticsService;
 
     @GetMapping("/deliveryRegionsPerNT")
-    public ApiResult deliveryRegionsPerNT() {
-        return null;
+    public ApiResult<List<DeliveryRegionsPerNT>> deliveryRegionsPerNT() {
+        return ApiResult.successResponse(statisticsService.deliveryRegionsPerNT());
     }
 
     @GetMapping("/scorePerCarrier")
