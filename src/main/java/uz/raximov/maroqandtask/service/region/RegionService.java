@@ -15,6 +15,8 @@ import uz.raximov.maroqandtask.repository.region.PlaceRepository;
 import uz.raximov.maroqandtask.repository.region.RegionRepository;
 
 import jakarta.validation.Valid;
+
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -58,6 +60,6 @@ public class RegionService {
             return place;
         }).collect(Collectors.toList());
 
-        return placeRepository.saveAll(newPlaces).stream().sorted().map(Place::getName).collect(Collectors.toList());
+        return placeRepository.saveAll(newPlaces).stream().sorted(Comparator.comparing(Place::getName)).map(Place::getName).collect(Collectors.toList());
     }
 }
