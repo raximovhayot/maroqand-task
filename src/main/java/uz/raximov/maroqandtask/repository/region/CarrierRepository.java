@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface CarrierRepository extends JpaRepository<Carrier, Long> {
 
-    @Query(value = "select c.id, u.name  from carrier c left join carrier_regions cr on c.id = cr.carriers_id left join users u where c.user_id = u.id where cr.regions_id = :regionId", nativeQuery = true)
+    @Query(nativeQuery = true)
     List<NameItem> findRegionCarriers(@Param("regionId") Long regionId);
 
     Optional<Carrier> findByUser_Name(String name);

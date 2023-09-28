@@ -1,5 +1,6 @@
 package uz.raximov.maroqandtask.service.region;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,6 @@ import uz.raximov.maroqandtask.repository.region.CarrierRepository;
 import uz.raximov.maroqandtask.repository.region.RegionRepository;
 import uz.raximov.maroqandtask.service.auth.UserService;
 
-import jakarta.validation.Valid;
-
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -45,7 +42,7 @@ public class CarrierService {
 
         Carrier carrier = new Carrier();
         carrier.setUser(user);
-        carrier.setUserId(carrier.getUserId());
+        carrier.setUserId(user.getId());
 
         if (!CollectionUtils.isEmpty(dto.getRegionNames())) {
             List<Region> regions = regionRepository.findAllByNameIn(dto.getRegionNames());
@@ -58,8 +55,7 @@ public class CarrierService {
     public List<NameItem> getCarriersForRegion(String regionName) {
         Region region = regionRepository.findByName(regionName)
                 .orElseThrow(() -> RestException.restThrow("Bunday region mavjud emas!", HttpStatus.BAD_REQUEST));
-        List<NameItem> carriers = carrierRepository.findRegionCarriers(region.getId());
-        return carriers.stream().sorted(Comparator.comparing(NameItem::getName)).toList();
+        return carrierRepository.findRegionCarriers(region.getId());
     }
 
     public Carrier findCarrierByName(String name) {

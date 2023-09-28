@@ -22,17 +22,6 @@ import uz.raximov.maroqandtask.payload.NameItem;
 @Getter
 @Setter
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(name = "region_place", columnNames = {"name", "region_id"})})
-@SqlResultSetMappings(value = {
-        @SqlResultSetMapping(name = "NameItemMapper",
-        classes = {
-                @ConstructorResult(targetClass = NameItem.class,
-                columns = {
-                        @ColumnResult(name = "id", type = Long.class),
-                        @ColumnResult(name = "name", type = String.class)
-                })
-        })
-})
 public class Place extends AbstractLongEntity {
 
     @Column
