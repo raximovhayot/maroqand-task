@@ -16,7 +16,7 @@ import java.util.List;
 
 @Setter
 @Getter
-@Entity
+@Entity(name = "carrier")
 public class Carrier extends AbstractLongEntity {
     @Column(name = "user_id")
     private Long userId;
