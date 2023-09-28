@@ -1,5 +1,6 @@
 package uz.raximov.maroqandtask.service.auth;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,6 +28,7 @@ public class AuthenticationService {
     private final UserMapper userMapper;
     private final UserService userService;
 
+    @Transactional
     public AuthenticationResponse signIn(SignInRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
