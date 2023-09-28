@@ -24,7 +24,7 @@ public class DeliveryRegionsPerNTDataset {
     @OneToOne(fetch = FetchType.LAZY)
     private Region region;
 
-    @Column(name = "transaction_count", columnDefinition = "DEFAULT 0")
+    @Column(name = "transaction_count")
     private Integer transactionCount;
 
     public DeliveryRegionsPerNTDataset(Long regionId) {
