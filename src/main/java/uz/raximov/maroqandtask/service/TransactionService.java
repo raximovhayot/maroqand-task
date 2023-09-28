@@ -70,6 +70,7 @@ public class TransactionService {
         transaction.setCarrierId(data.getCarrier().getId());
         transaction.setOfferId(data.getOffer().getId());
         transaction.setRequestId(data.getRequest().getId());
+        transaction.setScore(0);
         transactionRepository.save(transaction);
     }
 
@@ -98,5 +99,13 @@ public class TransactionService {
                 .offer(offer)
                 .carrier(carrier)
                 .build();
+    }
+
+    public boolean evaluateTransaction(int score, String transactionId) {
+        Transaction transaction = transactionRepository.findByTransactionId(transactionId)
+                .orElseThrow(() -> RestException.restThrow("Bunday transactionId lik transaction mavjud emas!", HttpStatus.BAD_REQUEST));
+        transaction.setScore(score);
+        transactionRepository.save(transaction);
+        return score >= 1 && score <= 10;
     }
 }

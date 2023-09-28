@@ -35,4 +35,7 @@ public class Transaction extends AbstractLongEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "offer_id", insertable = false, updatable = false)
     private Offer offer;
+
+    @Column(name = "score")
+    private int score;
 }
