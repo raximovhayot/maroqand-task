@@ -31,4 +31,10 @@ public class Carrier extends AbstractLongEntity {
         if (regions == null) regions = new ArrayList<>();
         return regions;
     }
+
+    public List<Place> getPlaces() {
+        List<Place> places = new ArrayList<>();
+        getRegions().forEach(r -> places.addAll(r.getPlaces()));
+        return places;
+    }
 }

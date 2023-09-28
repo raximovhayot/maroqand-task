@@ -5,10 +5,13 @@ import uz.raximov.maroqandtask.domain.region.Place;
 import uz.raximov.maroqandtask.payload.NameItem;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 
 public interface PlaceRepository extends JpaRepository<Place, Long> {
 
     List<NameItem> findAllByNameIn(Set<String> name);
+
+    Optional<NameItem> findByName(String name);
 }

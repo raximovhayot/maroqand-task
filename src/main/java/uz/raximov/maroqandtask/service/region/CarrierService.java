@@ -20,7 +20,6 @@ import uz.raximov.maroqandtask.service.auth.UserService;
 import javax.validation.Valid;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -54,5 +53,10 @@ public class CarrierService {
                 .orElseThrow(() -> RestException.restThrow("Bunday region mavjud emas!", HttpStatus.BAD_REQUEST));
         List<NameItem> carriers = carrierRepository.findRegionCarriers(region.getId());
         return carriers.stream().sorted(Comparator.comparing(NameItem::getName)).toList();
+    }
+
+    public Carrier findCarrierByName(String name) {
+       return carrierRepository.findByUser_Name(name)
+               .orElseThrow(() -> RestException.restThrow("Bunday ismli kuryer topilmadi!", HttpStatus.BAD_REQUEST));
     }
 }
