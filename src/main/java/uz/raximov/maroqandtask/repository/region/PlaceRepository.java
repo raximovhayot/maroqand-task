@@ -16,5 +16,6 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
     @Query("select new uz.raximov.maroqandtask.payload.NameItem(p.id, p.name) from Place p where p.name in (:name)")
     List<NameItem> findAllByNameIn(Set<String> name);
 
+    @Query("select new uz.raximov.maroqandtask.payload.NameItem(p.id, p.name) from Place p where p.name = :name")
     Optional<NameItem> findByName(String name);
 }
