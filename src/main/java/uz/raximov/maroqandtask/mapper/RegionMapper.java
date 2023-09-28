@@ -6,7 +6,7 @@ import uz.raximov.maroqandtask.payload.NameItem;
 
 import java.util.List;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface RegionMapper {
     NameItem toNameItem(Region region);
 

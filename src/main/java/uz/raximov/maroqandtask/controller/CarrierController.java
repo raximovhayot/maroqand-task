@@ -1,6 +1,8 @@
 package uz.raximov.maroqandtask.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,13 @@ public class CarrierController {
     public ApiResult<List<NameItem>> addCarrier(@RequestBody CreateCarrierDTO dto) {
         return ApiResult.successResponse(
                 carrierService.create(dto)
+        );
+    }
+
+    @GetMapping("/getCarriersForRegion/{regionName}")
+    public ApiResult<List<NameItem>> getCarriersForRegion(@PathVariable String regionName) {
+        return ApiResult.successResponse(
+                carrierService.getCarriersForRegion(regionName)
         );
     }
 }

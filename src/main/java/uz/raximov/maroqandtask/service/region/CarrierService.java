@@ -1,12 +1,14 @@
 package uz.raximov.maroqandtask.service.region;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uz.raximov.maroqandtask.domain.auth.Role;
 import uz.raximov.maroqandtask.domain.auth.User;
 import uz.raximov.maroqandtask.domain.region.Carrier;
 import uz.raximov.maroqandtask.domain.region.Region;
+import uz.raximov.maroqandtask.exceptions.RestException;
 import uz.raximov.maroqandtask.mapper.RegionMapper;
 import uz.raximov.maroqandtask.payload.NameItem;
 import uz.raximov.maroqandtask.payload.auth.CreateCarrierDTO;
@@ -16,7 +18,9 @@ import uz.raximov.maroqandtask.repository.region.RegionRepository;
 import uz.raximov.maroqandtask.service.auth.UserService;
 
 import javax.validation.Valid;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,5 +47,12 @@ public class CarrierService {
         carrier.setRegions(regions);
         carrierRepository.save(carrier);
         return regionMapper.toNameItemCollection(carrier.getRegions());
+    }
+
+    public List<NameItem> getCarriersForRegion(String regionName) {
+        Region region = regionRepository.findByName(regionName)
+                .orElseThrow(() -> RestException.restThrow("Bunday region mavjud emas!", HttpStatus.BAD_REQUEST));
+        List<NameItem> carriers = carrierRepository.findRegionCarriers(region.getId());
+        return carriers.stream().sorted(Comparator.comparing(NameItem::getName)).toList();
     }
 }
