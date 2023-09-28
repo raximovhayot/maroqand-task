@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import uz.raximov.maroqandtask.domain.auth.User;
 import uz.raximov.maroqandtask.exceptions.RestException;
 import uz.raximov.maroqandtask.payload.auth.CreateUserDTO;
@@ -12,6 +13,7 @@ import uz.raximov.maroqandtask.repository.auth.UsersRepository;
 import jakarta.validation.Valid;
 
 @Service
+@Validated
 @RequiredArgsConstructor
 public class UserService {
 

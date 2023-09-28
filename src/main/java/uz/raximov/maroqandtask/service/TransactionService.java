@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import uz.raximov.maroqandtask.domain.DeliveryRegionsPerNTDataset;
 import uz.raximov.maroqandtask.domain.region.Carrier;
 import uz.raximov.maroqandtask.domain.region.Place;
@@ -32,6 +33,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
+@Validated
 @RequiredArgsConstructor
 public class TransactionService {
     private final OfferRepository offerRepository;

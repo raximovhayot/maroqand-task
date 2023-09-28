@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import uz.raximov.maroqandtask.configuration.security.JwtTokenConfig;
 import uz.raximov.maroqandtask.domain.auth.Role;
 import uz.raximov.maroqandtask.domain.auth.Token;
@@ -19,6 +20,7 @@ import uz.raximov.maroqandtask.repository.auth.TokenRepository;
 import uz.raximov.maroqandtask.repository.auth.UsersRepository;
 
 @Service
+@Validated
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UsersRepository usersRepository;
